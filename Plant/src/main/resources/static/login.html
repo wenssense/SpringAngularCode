@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Planting Profit</title>
+
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<link rel="icon" type="image/png" href="assets/AT-pro-logo.png" />
+
+<!-- Import lib -->
+
+<link rel="stylesheet" type="text/css"
+	href="fontawesome-free/css/all.min.css">
+<link
+	href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+	rel="stylesheet">
+<!-- End import lib -->
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+	type="text/javascript"></script>
+
+
+<link rel="stylesheet" type="text/css" href="stylelogin.css">
+<script>
+	function ale(msg) {
+		var confirmBox = $("#container");
+
+		/* Trace message to display */
+		confirmBox.find(".message").text(msg);
+
+		/* Calling function */
+		confirmBox.find(".yes").unbind().click(function() {
+			confirmBox.hide();
+		});
+		confirmBox.find(".yes").click(msg);
+		confirmBox.show();
+	}
+</script>
+<script type="text/javascript">
+	function signUp() {
+		var firstname = document.getElementById("FirstName");
+		var LastName = document.getElementById("LastName");
+		var accounttype = document.getElementById("accounttype");
+		var contacno = document.getElementById("contactno");
+		var emal = document.getElementById("email");
+		var adr1 = document.getElementById("addr1");
+		var adr2 = document.getElementById("addr2");
+		var cty = document.getElementById("ctry");
+		var stat = document.getElementById("state");
+		var cit = document.getElementById("city");
+		var zi = document.getElementById("zip");
+		var sign = {
+			"firstName" : firstname.value,
+			"lastName" : LastName.value,
+			"accountType" : accounttype.value,
+			"contactNo" : contacno.value,
+			"email" : emal.value,
+			"state" : state.value,
+			"city" : city.value,
+			"country" : ctry.value,
+			"addr2" : adr2.value,
+			"addr1" : adr1.value,
+			"zipcode" : zip.value
+
+		}
+		if (firstname.value == '') {
+			ale('Please enter the details');
+		} else {
+			$.ajax({
+				type : "POST",
+				contentType : 'application/json; charset=utf-8',
+				dataType : 'json',
+				url : "/signupURL",
+				data : JSON.stringify(sign),
+				error : function(e) {
+					var ms = e.responseText;
+					if (ms == 'success') {
+						ale('your details has been registered successfully!!');
+					} else {
+						ale('failed to signup');
+					}
+				}
+			});
+		}
+	}
+</script>
+<script type="text/javascript">
+	function signIn() {
+		var username = document.getElementById("login_email");
+		var pass = document.getElementById("login_password");
+
+		var logIn = {
+			"email" : username.value,
+			"password" : pass.value,
+
+		}
+		$.ajax({
+			type : 'POST',
+			async : false,
+			contentType : 'application/json; charset=utf-8',
+			url : "/loginApp",
+			data : JSON.stringify(logIn),
+			dataType : 'json',
+			error : function(e) {
+				var ms = e.responseText;
+				if (ms == 'success') {
+					ale('Your are successfully logged in');
+				} else if (ms == 'fail') {
+					ale('Please enter correct credentials');
+				} else {
+					ale('your credentials should not be empty');
+				}
+			}
+		});
+	}
+</script>
+<style>
+#container {
+	display: none;
+	background-color: #b0d8d2;
+	color: #5030d2;
+	position: absolute;
+	width: 350px;
+	border-radius: 5px;
+	left: 50%;
+	margin-left: -160px;
+	padding: 16px 8px 8px;
+	box-sizing: border-box;
+}
+
+/* Designing dialog box's okay buttun */
+#container button {
+	background-color: #d89c21;
+	color: #fbfbf7;
+	display: inline-block;
+	border-radius: 5px;
+	border: 2px solid #e6dc9c;
+	padding: 5px;
+	text-align: center;
+	width: 60px;
+}
+
+/* Dialog box message decorating */
+#container .message {
+	text-align: left;
+	padding: 10px 30px;
+}
+</style>
+</head>
+<body class="overlay-scrollbar">
+
+	<!-- alert box -->
+
+	<div id="container">
+		<div class="message"></div>
+		<button class="yes">okay</button>
+	</div>
+	<!-- navbar -->
+
+
+	<!-- By Coding Market -->
+	<!-- <div class="youtube"> -->
+	<!-- <a href="https://www.youtube.com/channel/UCtVM2RthR4aC6o7dzySmExA" target="_blank">by coding market</a> -->
+	<!-- </div>  -->
+	<div class="wrapper">
+		<div class="container">
+
+			<div class="signup">Sign Up</div>
+			<div class="login">Log In</div>
+
+			<div class="signup-form">
+
+				<h3 class="addresss">Basic-Required Info</h3>
+				<div class="horizontal-group">
+
+					<div class="form-group left">
+						<input type="text" placeholder="FirstName" class="input"
+							id="FirstName">
+					</div>
+					<div class="form-group right">
+						<input id="LastName" type="text" placeholder="LastName"
+							class="input">
+					</div>
+
+				</div>
+				<div class="horizontal-group">
+
+					<div class="form-group left">
+						<input type="text" placeholder="Account Type" class="input"
+							id="accounttype">
+					</div>
+					<div class="form-group right">
+						<input type="text" placeholder="Contact No" class="input"
+							id="contactno">
+					</div>
+
+				</div>
+
+				<input type="text" placeholder="Email address" class="input"
+					id="email"><br />
+
+				<h3 class="addresss">Address Info</h3>
+				<div class="horizontal-group">
+
+					<div class="form-group left">
+						<input type="text" placeholder="Address Line1" class="input"
+							id="addr1">
+					</div>
+					<div class="form-group right">
+						<input type="text" placeholder="Address Line2" class="input"
+							id="addr2">
+					</div>
+
+				</div>
+				<div class="horizontal-group">
+
+					<div class="form-group left">
+						<input type="text" placeholder="Address Country" class="input"
+							id="ctry">
+					</div>
+					<div class="form-group right">
+						<input type="text" placeholder="Address State/Territory"
+							class="input" id="state">
+					</div>
+
+				</div>
+				<div class="horizontal-group">
+
+					<div class="form-group left">
+						<input type="text" placeholder="Address City/Town" class="input"
+							id="city">
+					</div>
+					<div class="form-group right">
+						<input type="text" placeholder="Zip" class="input" id="zip">
+					</div>
+
+				</div>
+				<div class="btn" onclick="signUp()">Create account</div>
+			</div>
+
+			<div class="login-form">
+				<input type="text" placeholder="Email or Username" class="input"
+					id="login_email"><br /> <input type="password"
+					placeholder="Password" class="input" id="login_password"><br />
+				<div class="btn" onclick="signIn()">log in</div>
+				<span><a href="#">I forgot my username or password.</a></span>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- By Coding Market -->
+	<!-- <div class="youtube"> -->
+	<!-- <!-- <a href="https://www.youtube.com/channel/UCtVM2RthR4aC6o7dzySmExA" target="_blank">by coding market</a> -->
+
+	<!-- </div> -->
+	<!-- import script -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script> -->
+	<script src="slider-js1.js"></script>
+	<!-- end import script -->
+</body>
+</html>
